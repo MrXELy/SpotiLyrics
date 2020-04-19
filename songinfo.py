@@ -54,7 +54,7 @@ def encodeURL(songString):
     return parse.quote(songString)
 
 
-def searchURL(songString):
+def getSearchURL(songString):
     return "https://search.azlyrics.com/search.php?q=" + encodeURL(songString)
     
 
@@ -64,10 +64,10 @@ def getSoup(URL):
 
     return soup
 
-def hasLyrics(soup):
+def getLyricsURL(soup):
     presoup = soup.find(class_="text-left visitedlyr")
     if presoup == None:
-        return False
+        return -1
 
     lyricURL = str(presoup)
 

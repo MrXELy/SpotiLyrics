@@ -10,11 +10,11 @@ while 1:
     if windowTitle != -1:
         artist, song = si.getSongInfo(windowTitle)
 
-        URL = si.searchURL(artist + " " + song)
+        URL = si.getSearchURL(artist + " " + song)
 
-        lyricsURL = si.hasLyrics(si.getSoup(URL))
+        lyricsURL = si.getLyricsURL(si.getSoup(URL))
 
-        if lyricsURL == False:
+        if lyricsURL == -1:
             print("No lyrics ? " + URL)
             lyrics = "Can't find the lyrics... "
         else:    
