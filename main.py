@@ -1,23 +1,24 @@
 import os
-from songinfo import *
+import songinfo as si
+from time import sleep
 
-windowID = initSpotify()
-windowTitle = getWindowTitle(windowID)
+windowID = si.initSpotify()
+windowTitle = si.getWindowTitle(windowID)
 
 while 1:
-    windowTitle = getWindowTitle(windowID)
+    windowTitle = si.getWindowTitle(windowID)
     if windowTitle != -1:
-        artist, song = getSongInfo(windowTitle)
+        artist, song = si.getSongInfo(windowTitle)
 
-        URL = searchURL(artist + " " + song)
+        URL = si.searchURL(artist + " " + song)
 
-        lyricsURL = hasLyrics(getSoup(URL))
+        lyricsURL = si.hasLyrics(si.getSoup(URL))
 
         if lyricsURL == False:
             print("No lyrics ? " + URL)
             lyrics = "Can't find the lyrics... "
         else:    
-            lyrics = artist + " - " + song + " " + lyricsURL + " " + getLyrics(getSoup(lyricsURL))
+            lyrics = artist + " - " + song + " " + lyricsURL + " " + si.getLyrics(si.getSoup(lyricsURL))
             
         f = open("lyrics.txt", "w+")
         f.write(lyrics)
