@@ -69,16 +69,27 @@ def getSoup(URL):
 
     return soup
 
+
 def getLyricsURL(soup):
     presoup = soup.find(class_="text-left visitedlyr")
     if presoup == None:
-        return -1
+        return None
 
     lyricURL = str(presoup)
 
     lyricURL = lyricURL[ lyricURL.find('<a href="') + 9 : lyricURL.find('" target') ]
 
     return lyricURL
+
+
+def getWebTitle(soup, artist, song):
+    webTitle = soup.find("title").get_text()
+
+    titleArtist, titleSong = webTitle.split(" - ", 1)
+    titleSong = titleSong[ titleSong.find(' "') + 2 : titleSong.find('" |') ]
+
+    return titleArtist, titleSong
+
 
 def getLyrics(soup):
     return provider.extract_lyrics(soup)
