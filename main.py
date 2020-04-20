@@ -34,10 +34,14 @@ while True:
                     else:
                         print("Could not find the same exact title, lyrics might be wrong " + URL)
                     lyrics = artist + " - " + song + " " + lyricsURL + " " + si.getLyrics(si.getSoup(lyricsURL))
-                
-            f = open("lyrics.txt", "w+")
-            f.write(lyrics)
-            f.close()
+
+            try:   
+                f = open("lyrics.txt", "w+")
+                f.write(lyrics)
+                f.close()
+            except UnicodeEncodeError:
+                print("Can't write the lyrics : UnicodeEncodeError")
+
         else:
             print("No song playing")
 
