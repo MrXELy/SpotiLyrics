@@ -1,14 +1,13 @@
 import os
 import win32gui
-import win32api
 from time import sleep
 from urllib import parse
 import bs4 as BS
 import requests
-import lyricsmaster
+from lyricsmaster import AzLyrics
 
 headers = { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36" }
-provider = lyricsmaster.AzLyrics()
+provider = AzLyrics()
 
 def getWindowID():
     windowID = win32gui.FindWindow("Chrome_WidgetWin_0", "Spotify Premium")
