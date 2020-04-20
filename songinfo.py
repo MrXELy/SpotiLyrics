@@ -15,17 +15,18 @@ def getWindowID():
     return windowID
 
 
+def isSongPlaying(windowTitle):
+    return not(windowTitle == "Spotify Premium" or windowTitle == "Spotify" or windowTitle == "Spotify Free")
+
+
 def getWindowTitle(windowID):
     windowTitle = win32gui.GetWindowText(windowID)
-    if windowTitle == "Spotify Premium": # Spotify opened, but no song playing
-        #print("No song playing.")
-        return -1
-    elif windowTitle == "": # Spotify closed
+
+    if windowTitle == "": # Spotify closed
         print("I can't find Spotify anymore... Please make sure Spotify is running and restart this script.")
         exit()
-    else:
-        #print(windowTitle)
-        return windowTitle
+
+    return windowTitle
 
 
 def hasSongChanged(currentTitle, newTitle):
