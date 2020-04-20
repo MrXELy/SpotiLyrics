@@ -24,8 +24,8 @@ while True:
                 lyrics = "Can't find the lyrics, no results " + URL
                 print(lyrics)
             else:
-                titleArtist, titleSong = si.getWebTitle(si.getSoup(lyricsURL), artist, song) 
-                if regex.sub('', titleArtist).lower() != regex.sub('', artist).lower(): # remove all non alphanum chars
+                titleArtist, titleSong = si.getWebSongInfo(si.getSoup(lyricsURL), artist, song) 
+                if regex.sub('', titleArtist).lower().find(regex.sub('', artist).lower()) == -1: # remove all non alphanum chars + look for featuring
                     lyrics = "Can't find the lyrics... " + URL
                     print(lyrics)
                 else: 
