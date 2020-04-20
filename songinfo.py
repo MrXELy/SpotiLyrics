@@ -29,8 +29,8 @@ def getWindowTitle(windowID):
     return windowTitle
 
 
-def hasSongChanged(currentTitle, newTitle):
-    return currentTitle == newTitle
+def hasTitleChanged(currentTitle, newTitle):
+    return not(currentTitle == newTitle)
 
 
 def initSpotify():
