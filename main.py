@@ -33,7 +33,7 @@ while True:
                         print("Perfect match " + lyricsURL)
                     else:
                         print("Could not find the same exact title, lyrics might be wrong " + URL)
-                    lyrics = titleArtist + " - " + titleSong + " " + lyricsURL + " " + si.getLyrics(si.getSoup(lyricsURL))
+                    lyrics = titleArtist + " - " + titleSong + " " + lyricsURL + " " + '\n\n' + si.extractLyrics(lyricsURL)
 
             try:   
                 f = open("lyrics.txt", "w+", encoding='utf-8-sig')

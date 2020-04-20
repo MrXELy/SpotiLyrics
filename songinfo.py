@@ -4,10 +4,9 @@ from time import sleep
 from urllib import parse
 import bs4 as BS
 import requests
-from lyricsmaster import AzLyrics
+from re import compile
 
 headers = { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36" }
-provider = AzLyrics()
 
 def getWindowID():
     windowID = win32gui.FindWindow("Chrome_WidgetWin_0", "Spotify Premium")
@@ -97,5 +96,12 @@ def getWebSongInfo(soup, artist, song):
     return titleArtist, titleSong
 
 
-def getLyrics(soup):
-    return provider.extract_lyrics(soup)
+def extractLyrics(URL):
+    soup = getSoup(URL)
+
+    text = str(soup.find(class_="col-xs-12 col-lg-8 text-center"))
+    text = text[ text.find(" -->") + 5 : ]
+    text = text[ : text.find("</div>") ]
+    regex = compile('<[^>]*>')
+    text = regex.sub('', text)
+    return text
