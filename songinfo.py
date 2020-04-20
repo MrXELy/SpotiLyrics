@@ -82,7 +82,7 @@ def getLyricsURL(soup):
     return lyricURL
 
 
-def getWebTitle(soup, artist, song):
+def getWebSongInfo(soup, artist, song):
     webTitle = soup.find("title").get_text()
 
     if webTitle.find("Paroles") != -1:
