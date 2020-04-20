@@ -85,10 +85,13 @@ def getLyricsURL(soup):
 def getWebSongInfo(soup, artist, song):
     webTitle = soup.find("title").get_text()
 
-    if webTitle.find("Paroles") != -1:
+    if webTitle.find("Paroles de") != -1: # French
         titleArtist, titleSong = webTitle.split(" - ", 1)
         titleSong = titleSong[ titleSong.find(' "') + 2 : titleSong.find('" |') ]
-    elif webTitle.find(" Lyrics") != -1:
+    elif webTitle.find("Letra de") != -1: # Spanish
+        titleArtist, titleSong = webTitle.split(" - ", 1)
+        titleSong = titleSong[ titleSong.find(' "') + 2 : titleSong.find('" |') ]
+    else:
         titleArtist, titleSong = webTitle.split(" - ", 1)
         titleSong = titleSong[ 0 : titleSong.find(' Lyrics') ]
 
