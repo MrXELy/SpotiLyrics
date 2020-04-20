@@ -36,16 +36,17 @@ while True:
                     lyrics = titleArtist + " - " + titleSong + " " + lyricsURL + " " + si.getLyrics(si.getSoup(lyricsURL))
 
             try:   
-                f = open("lyrics.txt", "w+")
+                f = open("lyrics.txt", "w+", encoding='utf-8-sig')
                 f.write(lyrics)
                 f.close()
-            except UnicodeEncodeError:
-                print("Can't write the lyrics : UnicodeEncodeError")
+            except UnicodeEncodeError as e:
+                print("Can't write the lyrics: ", e)
 
         else:
             print("No song playing")
 
         oldWindowTitle = newWindowTitle
+        print()
         
 
 
