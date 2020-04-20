@@ -1,3 +1,5 @@
+# -*- coding :Latin -1 -*
+
 import os
 import songinfo as si
 from time import sleep
@@ -51,3 +53,5 @@ while True:
 
 
     sleep(1)
+
+os.system("pause")

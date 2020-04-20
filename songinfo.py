@@ -1,3 +1,5 @@
+# -*- coding :Latin -1 -*
+
 import os
 import win32gui
 from time import sleep
