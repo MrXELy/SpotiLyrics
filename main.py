@@ -28,8 +28,8 @@ while True:
                 if regex.sub('', titleArtist).lower().find(regex.sub('', artist).lower()) == -1: # remove all non alphanum chars + look for featuring
                     lyrics = "Can't find the lyrics... " + URL
                     print(lyrics)
-                else: 
-                    if titleSong.lower() == song.lower():
+                else:
+                    if regex.sub('', titleSong).lower().find(regex.sub('', song).lower()) != -1: # if song is part of titleSong
                         print("Perfect match " + lyricsURL)
                     else:
                         print("Could not find the same exact title, lyrics might be wrong " + URL)
