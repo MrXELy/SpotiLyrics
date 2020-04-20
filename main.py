@@ -1,7 +1,9 @@
 import os
 import songinfo as si
 from time import sleep
+from re import compile
 
+regex = compile('[^a-z0-9A-Z]')
 windowID = si.initSpotify()
 oldWindowTitle = ""
 newWindowTitle = si.getWindowTitle(windowID)
@@ -18,11 +20,20 @@ while True:
 
             lyricsURL = si.getLyricsURL(si.getSoup(URL))
 
-            if lyricsURL == -1:
-                print("No lyrics ? " + URL)
-                lyrics = "Can't find the lyrics... " + URL
-            else:    
-                lyrics = artist + " - " + song + " " + lyricsURL + " " + si.getLyrics(si.getSoup(lyricsURL))
+            if lyricsURL == None:
+                lyrics = "Can't find the lyrics, no results " + URL
+                print(lyrics)
+            else:
+                titleArtist, titleSong = si.getWebTitle(si.getSoup(lyricsURL), artist, song) 
+                if regex.sub('', titleArtist).lower() != regex.sub('', artist).lower(): # remove all non alphanum chars
+                    lyrics = "Can't find the lyrics... " + URL
+                    print(lyrics)
+                else: 
+                    if titleSong.lower() == song.lower():
+                        print("Perfect match " + lyricsURL)
+                    else:
+                        print("Could not find the same exact title, lyrics might be wrong " + URL)
+                    lyrics = artist + " - " + song + " " + lyricsURL + " " + si.getLyrics(si.getSoup(lyricsURL))
                 
             f = open("lyrics.txt", "w+")
             f.write(lyrics)
