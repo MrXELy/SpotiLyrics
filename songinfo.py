@@ -111,7 +111,7 @@ def extractLyrics(URL): #AZLyrics
 
 
 def getGeniusURL(artist, song):
-    regex = compile('[^a-zA-Z0-9 ]+')
+    regex = compile('[^a-zA-Z0-9 -]+')
 
     artist = unidecode.unidecode(artist)
     artist = artist.replace("&", "and")

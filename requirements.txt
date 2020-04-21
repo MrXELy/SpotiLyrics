@@ -1,4 +1,4 @@
 pywin32
 bs4
 requests
-lyricsmaster
+unidecode
