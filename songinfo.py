@@ -7,6 +7,7 @@ from urllib import parse
 import bs4 as BS
 import requests
 from re import compile
+import unidecode
 
 headers = { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36" }
 
@@ -109,6 +110,27 @@ def extractLyrics(URL):
     return text
 
 
+def getGeniusURL(artist, song):
+    regex = compile('[^a-zA-Z0-9 ]+')
+
+    artist = unidecode.unidecode(artist)
+    artist = artist.replace("&", "and")
+    artist = regex.sub('', artist)
+    artist = artist.replace(" ", "-")
+    
+    song = unidecode.unidecode(song)
+    song = regex.sub('', song)
+    song = song.replace(" ", "-")
+
+    URL = f'https://genius.com/{artist}-{song}-lyrics'
+
+    return URL
+
+
+#def getGeniusLyrics(artist, song):
+
+
+
 def getLyrics(windowTitle):
     regex = compile('[^a-z0-9A-Z]')
 
@@ -122,7 +144,7 @@ def getLyrics(windowTitle):
         lyrics = "Can't find the lyrics, no results " + URL
         print(lyrics)
     else:
-        titleArtist, titleSong = getWebSongInfo(getSoup(lyricsURL), artist, song) 
+        titleArtist, titleSong = getWebSongInfo(getSoup(lyricsURL), artist, song)
         if regex.sub('', titleArtist).lower().find(regex.sub('', artist).lower()) == -1: # remove all non alphanum chars + look for featuring
             lyrics = "Can't find the lyrics... " + URL
             print(lyrics)
@@ -132,5 +154,5 @@ def getLyrics(windowTitle):
             else:
                 print("Could not find the same exact title, lyrics might be wrong " + URL)
             lyrics = titleArtist + " - " + titleSong + " " + lyricsURL + " " + '\n\n' + extractLyrics(lyricsURL)
-    
+
     return lyrics
