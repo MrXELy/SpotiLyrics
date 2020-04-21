@@ -107,3 +107,30 @@ def extractLyrics(URL):
     regex = compile('<[^>]*>')
     text = regex.sub('', text)
     return text
+
+
+def getLyrics(windowTitle):
+    regex = compile('[^a-z0-9A-Z]')
+
+    artist, song = getSongInfo(windowTitle)
+    print(artist + " - " + song)
+    URL = getSearchURL(artist + " " + song)
+
+    lyricsURL = getLyricsURL(getSoup(URL))
+
+    if lyricsURL == None:
+        lyrics = "Can't find the lyrics, no results " + URL
+        print(lyrics)
+    else:
+        titleArtist, titleSong = getWebSongInfo(getSoup(lyricsURL), artist, song) 
+        if regex.sub('', titleArtist).lower().find(regex.sub('', artist).lower()) == -1: # remove all non alphanum chars + look for featuring
+            lyrics = "Can't find the lyrics... " + URL
+            print(lyrics)
+        else:
+            if regex.sub('', titleSong).lower().find(regex.sub('', song).lower()) != -1: # if song is part of titleSong
+                print("Perfect match " + lyricsURL)
+            else:
+                print("Could not find the same exact title, lyrics might be wrong " + URL)
+            lyrics = titleArtist + " - " + titleSong + " " + lyricsURL + " " + '\n\n' + extractLyrics(lyricsURL)
+    
+    return lyrics
