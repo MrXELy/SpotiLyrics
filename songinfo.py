@@ -99,7 +99,7 @@ def getWebSongInfo(soup, artist, song):
     return titleArtist, titleSong
 
 
-def extractLyrics(URL):
+def extractLyrics(URL): #AZLyrics
     soup = getSoup(URL)
 
     text = str(soup.find(class_="col-xs-12 col-lg-8 text-center"))
@@ -127,8 +127,12 @@ def getGeniusURL(artist, song):
     return URL
 
 
-#def getGeniusLyrics(artist, song):
+def extractGeniusLyrics(URL):
+    soup = getSoup(URL)
 
+    lyrics = soup.find("div", class_="lyrics").get_text()
+    
+    return lyrics
 
 
 def getLyrics(windowTitle):
