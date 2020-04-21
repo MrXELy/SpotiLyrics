@@ -130,8 +130,25 @@ def getGeniusURL(artist, song):
 def extractGeniusLyrics(URL):
     soup = getSoup(URL)
 
-    lyrics = soup.find("div", class_="lyrics").get_text()
+    lyrics = soup.find("div", class_="lyrics")
+
+    if lyrics == None:
+        return None
     
+    return lyrics.get_text()
+
+
+def tryGenius(artist, song):
+    print("Trying Genius...")
+
+    lyricsURL = getGeniusURL(artist, song)
+    lyrics = extractGeniusLyrics(lyricsURL)
+    if lyrics == None:
+        lyrics = "Can't find the lyrics... " + lyricsURL
+        print(lyrics)
+    else:
+        print("Perfect match " + lyricsURL)
+        lyrics = artist + " - " + song + " " + lyricsURL + "\n" + lyrics
     return lyrics
 
 
@@ -147,16 +164,31 @@ def getLyrics(windowTitle):
     if lyricsURL == None:
         lyrics = "Can't find the lyrics, no results " + URL
         print(lyrics)
+        
+        lyrics = tryGenius(artist, song)
+            
     else:
         titleArtist, titleSong = getWebSongInfo(getSoup(lyricsURL), artist, song)
         if regex.sub('', titleArtist).lower().find(regex.sub('', artist).lower()) == -1: # remove all non alphanum chars + look for featuring
             lyrics = "Can't find the lyrics... " + URL
             print(lyrics)
+
+            lyrics = tryGenius(artist, song)
+
         else:
             if regex.sub('', titleSong).lower().find(regex.sub('', song).lower()) != -1: # if song is part of titleSong
                 print("Perfect match " + lyricsURL)
+                lyrics = titleArtist + " - " + titleSong + " " + lyricsURL + " " + '\n\n' + extractLyrics(lyricsURL)
             else:
                 print("Could not find the same exact title, lyrics might be wrong " + URL)
-            lyrics = titleArtist + " - " + titleSong + " " + lyricsURL + " " + '\n\n' + extractLyrics(lyricsURL)
+
+                lyrics = tryGenius(artist, song)
+
+                if lyrics.find("Can't find the lyrics... ") != -1:
+                    print("No results")
+                    print("Closest result " + lyricsURL)
+                    lyrics = titleArtist + " - " + titleSong + " " + lyricsURL + " " + '\n\n' + extractLyrics(lyricsURL)
+                else:
+                    return lyrics
 
     return lyrics
