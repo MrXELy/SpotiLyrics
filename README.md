@@ -16,6 +16,6 @@ Small project initiated on 04/19/2020, during COVID-19 lockdown. Poorly written 
 * ~~Search for lyrics when the song changes (vs. every seconds)~~
 * ~~Check if the lyrics' page actually match the song being played~~
 * ~~build my own code to get actual lyrics (get rid of lyricsmaster)~~
-* 
+* switch to Genius
 * build a GUI to display lyrics
 * \+ a lot more
